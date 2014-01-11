@@ -64,7 +64,7 @@ app.get('/api/person/:id', function(req, res){
             });
         });
 });
-app.get('/api/person', function(req, res){
+app.post('/api/person', function(req, res){
     var person = {
         PartitionKey: "all",
         RowKey: req.body.id,
