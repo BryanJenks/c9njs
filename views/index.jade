@@ -3,3 +3,27 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  input(id='msg')
+  input(id='btn', type='submit')
+
+  ul(id='messages')
+
+  script(src='http://code.jquery.com/jquery-1.8.1.min.js')
+  script(src='/socket.io/socket.io.js')
+  script(type='text/javascript')
+    $(function() {
+      var socket = io.connect();
+      socket.on('news', function (data) {
+        show(data);
+      });
+      $('#btn').on('click', function() {
+        var msg = $('#msg').val();
+        $('#msg').val('');
+        show(msg);
+        socket.emit('message', msg);
+        });
+    });
+    function show(msg) {
+      $('#messages').append('<li>' + msg + '</li>')
+    }
